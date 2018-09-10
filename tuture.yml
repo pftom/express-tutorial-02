@@ -1,0 +1,346 @@
+name: 使用 Express 开发项目系列-01-先来一个 Hello World
+topics:
+  - javascript
+  - nodejs
+  - express
+id: d81f758b511a43ae1a7e3dacee1c3348
+steps:
+  - name: 前言
+    commit: 0d327e4
+    diff:
+      - file: .gitignore
+      - file: package.json
+        display: true
+        explain:
+          pre: >
+            ### 安装 Node.js
+
+
+            首先，下载最新的 Node.js 。访问[ Node.js 
+            官网](https://nodejs.org/en/)可以下载。在下载并安装成功之后，我们打开终端，输入如下命令来检验 Node.js
+            是否安装成功：
+
+
+            ```shell
+
+            node -v
+
+            npm -v
+
+            ```
+
+
+            ![](tuture-assets/dd4658613cf78c216a39ea418ec5c32d)
+
+
+            如果安装成功，你应该可以看到上图类似的输出。注意到，我们在上面运行了两条命令，那么为什么会有两条命令了？
+
+
+            ### Node.js 是什么？
+
+
+            我们通过 Node.js 安装器安装之后，会安装两个内容：Node.js 和 Npm。
+
+
+            Node.js 是一个 JavaScript 在服务器端的运行时，它赋予了 JavaScript 操作服务器端的能力，所以，学习了
+            JavaScript 不仅能写前端应用，还能写后端服务了！
+
+
+            ### Npm 是什么？
+
+
+            Npm 是一个 Node.js 包管理工具，它允许你通过简单的命令 `npm install somePackage`
+            安装来自社区写的第三方扩展，这样，在处理很多复杂的场景时，你完全可以借助社区的高质量包来解决问题，大大加快开发效率。
+
+
+            ### 初始化项目
+
+
+            首先让我们打开终端，输入如下命令来创建一个项目：
+
+
+            ```shell
+
+            mkdir express-serial01
+
+            cd express-serial01
+
+            ```
+
+
+            现在，使用你钟爱的编辑器打开这个项目吧！
+
+
+            比较可惜的是，这个项目看起来还是空空如也，别急，让我们来给它加点东西。
+
+
+            继续打开终端，输入如下命令：
+
+
+            ```shell
+
+            npm init -y
+
+            ```
+
+
+            当运行了上面的命令之后，你应该能观察到你的项目里面多了一个叫做 `package.json` 的文件：
+          post: >-
+            让我们来详细的剖析一下上面那句简短的 `npm init -y` 做了哪些工作。
+
+
+            `npm init -y` 是在原来的 `npm init` 加上了一个选项  `-y` ，这个选项是 `--yes` 的缩写。`npm
+            init` 表示使用 `npm` 来初始化一个 Node.js
+            项目，如果单独运行它，会在终端打印一系列待填或待选的问题，通过你选择或填写这些问题来帮助 npm 初始生成 package.json
+            文件：
+
+
+            ![](tuture-assets/15c35786e118317d62b37a78602b0c91)
+
+
+
+            而加上 `-y` 选项之后，表示告知 npm 不要打印上述的那些内容，之后选择默认的值填充并生成 `package.json` 文件：
+
+
+            ![](tuture-assets/9377ab8a6ad0225d76ef8665665ae6d1)
+
+
+            当你的项目目录之下存在一个合法的 package.json 文件时，那么这个项目就是一个合法的 Node.js 项目。
+
+
+            ### package.json 是什么？
+
+
+            package.json 是一个 JSON 文件，它里面存储着一系列键值对。目前我们先简要介绍一下初始化生成的 package.json
+            文件的以下几个字段：
+
+             - name
+
+             - version
+
+             - main
+
+            name 字段表示这个项目的名词，我们通过给 `npm init` 加上 `-y` 选项之后，默认的 name
+            就是当前项目文件夹的名字。
+
+
+            version
+            表示当前项目的版本，如果你将持续开发一个项目，那么它的功能会不断变化，每当你改进了一些功能，你可能需要一个标志来记录一下当前的改进内容，以便以后方便的查阅某个功能的改进时间和当时的改进记录，所以需要给这些改进打上一个版本号，作为这个改进的标志，默认生成的版本号为
+            `1.0.0`。
+
+
+            main 表示项目的入口文件，即你在开启一个 Node.js
+            项目时，需要运行的文件。默认生成的入口文件标识为：`index.js`。因此你在运行一个 Node.js 项目时，可以通过 `node
+            index.js` 来运行它。
+
+
+            package.json 的字段有很多，有些字段可以完成非常复杂的自动化任务，如果你想了解更多的内容，可以参考 [npm
+            官方文档](https://docs.npmjs.com/getting-started/using-a-package.json)。
+    explain:
+      pre: |-
+        ## 正式开始
+
+        本篇教程是 “用 Express 开发项目” 系列教程的第一篇 -- “先来一个 Hello World”。
+
+        在这篇教程中，你将要完成如下的目标：
+
+         - 初始化一个 Node.js 项目，在终端打印 "Hello World" 语句。
+
+         - 使用 Express 搭建一个本地的 Web 服务器。
+
+         - 配置服务器路由（Routing），让浏览器输出 "Hello World" 语句。
+
+
+        同时，在这篇教程中，你将学习到如下的知识：
+
+          - Node.js 是什么？
+
+          - 如何初始化一个 Node.js 项目？
+
+          - npm 是什么？
+
+          - package.json 是干什么的？在初始化时默认的那些字段有什么含义？
+
+          - Express 是什么？
+
+          - 路由（Routing）是什么？
+
+        接下来就让我们一步一步的揭开这些疑问，完成我们的目标吧！
+  - name: 一个简单的 Node.js "Hello Node"
+    commit: 977ed60
+    diff:
+      - file: index.js
+        display: true
+        explain:
+          pre: 我们打开编辑器，在项目下创建一个 `index.js` 文件，然后在其中填入如下的内容：
+          post: >-
+            这是一个简单的 “Hello Node” 的打印输出。让我们来看一看如何在 Node.js
+            运行这条输出。我们打开终端，进入到项目目录之下，在终端中输入如下的命令：
+
+
+            ```shell
+
+            node index.js
+
+            ```
+
+
+            上面的命令就是 Node.js 执行文件时用到命令，以后我们运行 Node.js
+            项目时都会用到上面类似的命令。当运行了上面的命令之后，我们可以在终端看到如下的输出：
+
+
+            ![](tuture-assets/ce338624ec5e0c4c3ab08e5e3c14ae8f)
+
+
+            恭喜你！现在你已经成功完成了一个最最基本的 Node.js 项目，它看起来相当的简单，以至于简单得有点单调，接下来我们将开始使用
+            Express ，让浏览器输出 “Hello Node”。
+    explain:
+      pre: |-
+        让我们回忆一下在上一节我们完成了哪些工作：
+
+         - 我们首先安装了 Node.js ，目前，在安装 Node.js 的同时会默认安装 Npm 。
+
+         - 然后我们创建了一个空的项目。
+
+         - 接着我们使用 `npm init -y` 将这个项目转化成了一个 Node.js 项目。
+
+        到目前为止，都还只是一些概念性的东西，显得有点小枯燥，但是没关系，我们马上开始搞点好玩的。
+  - name: Express 也能说 "Hello Node"
+    commit: 1c14aa6
+    diff:
+      - file: package.json
+        display: true
+        explain:
+          pre: 安装完之后，我们的 package.json 会变成下面的样子：
+          post: >-
+            我们可以看到，在 package.json 里面多了一个字段：`dependencies`，每当我们通过 `npm install
+            some-package` 时，都会在这个字段中加入相应的 `some-package` 名和版本号。
+
+
+            同时，请注意这个 `dependencies` 字段记录着的是这个 Node.js
+            项目开发至今安装过的所有依赖，而不是项目所使用到的所有依赖，因为你可能安装了这个依赖，但是在项目中并没有使用到它。
+      - file: index.js
+        display: true
+        explain:
+          pre: 现在让我们打开 index.js 文件，将其中的内容改成下面的代码：
+          post: >+
+            改成上面的内容之后，我们打开终端，执行 `node index.js` 来开启我们的 Express 服务器，接着我们打开浏览器，输入
+            `http://localhost:3000`，可以看到下面的效果：
+
+
+            ![](tuture-assets/7130387b4bf14926b6f7e0ef4dec2b76)
+
+
+            非常好！我们已经成功过渡到 Express 了，而且使用 Express 创建了一个简单的 Web
+            服务器，并且配置了路由，使得我们可以在浏览器中访问时能够显示出 `Hello Node`。
+
+
+            体验了结果之后，让我们来好好剖析一下我们上面的那段代码做了怎么样的事。
+
+
+            ```javascript
+
+            const express = require("express");
+
+            ```
+
+
+            首先我们使用 `require` 语句导出了 `express` 包，因为我们前面安装了这个包，所以在 Node.js 项目中可以通过
+            `require` 来导出这个包使用；
+
+
+            ```javascript
+
+            const app = express();
+
+            ```
+
+
+            然后，我们执行了执行了 `express()` 并把它赋给了 `app` 变量。这里导出的 express
+            内部包含了许多用来处理服务器各项工作的实用函数或变量，我们通过执行 `express` 生成的 express 实例赋给 `app`
+            变量，就可以通过 app 来使用 express 提供的各种实用函数和变量。
+
+
+            ```javascript
+
+            app.get("/", (req, res) => res.send("Hello Node"));
+
+            ```
+
+
+            接着，我们使用 `app.get(path, handleMehtod)` 创建了一个路由，这个路由的路径为 `'/'`
+            ，表示我们访问当前服务器下的 `'/'` 路径时，会执行 `app.get`
+            的第二个参数，即处理路由的函数。这里处理路由的函数是一个箭头函数，它接收两个参数：`req` 和 `res` ，分别代表
+            `request`，`response`，一个代表请求，一个代表响应，当访问这个路由时，我们可以通过 `req`
+            取到访问者的一些信息，通过 `res` 发送给访问者一些信息。这里我们通过 `res.send("Hello Node")`
+            给访问者发送了一个字符串 `"Hello Node"`。
+
+
+            ```javascript
+
+            app.listen(3000, () => {
+              console.log("App is listening on port 3000 ...");
+            });
+
+            ```
+
+
+            最后，我们调用 `app.listen` 函数来监听本地开发服务器的 `3000` 端口，然后传了一个回调函数给
+            `app.listen` 表示当监听端口成功之后就打印一条提示语句：`"App is listening on port 3000
+            ..."`。
+
+      - file: yarn.lock
+    explain:
+      pre: |-
+        接下来，我们将通过 Express 来创建一个 Web 服务器。
+
+        首先我们在终端输入如下命令来安装 Express 依赖：
+
+        ```shell
+        npm install express
+        ```
+      post: >-
+        当我们在终端运行 `node index.js` 之后，Node 解释器会执行 index.js 中的代码，然后开启本地服务器
+        `http://localhost`，监听 3000 端口，所以最后我们的服务器完整地址为 `http://localhost:3000`。
+
+
+        当我们在浏览器中访问 `http://localhost:3000` 时，浏览器会自动将其解析为
+        `http://localhost:3000/` 这样就会激活 `app.get('/', (req, res) =>
+        res.send("Hello Node")` 路由，最后，我们在浏览器中就可以看到 `"Hello Node"` 结果。
+
+
+        # 总结
+
+
+        到目前为止，我们就已经完成了我们预期的目标了！我要向能坚持看到这里的你说一句：**真棒！**
+
+
+        最后，让我们总结一下我们在这篇教程中学到了那些东西：
+
+         - 通过 `npm init` 初始化一个 Node.js 项目，但 `npm init` 会让我们填一大堆东西，所以我们一般使用 `npm init -t` 来初始化一个 Node.js 项目。
+
+         - 当运行 `npm init -y` 之后，会生成一个 `package.json` 文件，一个拥有正确的 `package.json` 文件的项目就是一个正确的 Node.js 项目。
+
+         - 一个 Node.js 文件是以 `.js` 为后缀的文件，我们新建了一个  `index.js` 文件，并在其中写了一个简单 `console.log` 语句，这是一个 Node.js 控制台打印语句，接着我们通过 `node` 命令执行我们的 `index.js` ，在终端输出了 "Hello Node"。
+
+        - 我们安装 Express，然后使用 Express 创建了一个服务器，它的地址为 `http://localhost:3000`
+        ，然后创建了一个路径为 `'/'` 的路由，接着我们通过 `node index.js` 来开启服务器，在浏览器中访问这个地址，成功获得了
+        "Hello Node" 的输出。
+
+
+        # 下篇教程的展望
+
+
+        这一节我们只是在浏览器中打印了一个简单的字符串："Hello
+        Node"，但是我们平时在浏览器中会看到非常多的，且生动的内容，这个时候，简单的字符串就不够用了，所以我们需要能够展示大量丰富信息的
+        **模板引擎** 来帮忙。
+
+
+        有了模板引擎，我们就能方便的制作更多的内容，当内容太多且不相关时，我们就需要将内容分散到不同的页面，这个时候我们就会丰富 **路由**。
+
+
+        随着路由的增多，我们的 Express 项目的功能会越来越复杂，因此会借助社区的第三方模块来帮我们解决问题，这个时候就会引入对
+        **Express 中间件** 的介绍以及 **错误处理**。
+
+
+        好的，我们下篇教程见！
