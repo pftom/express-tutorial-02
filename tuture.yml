@@ -6,12 +6,80 @@ topics:
 id: c9136e583956eb18c610c7152c2fcfd7
 steps:
   - name: 使用模板引擎
-    commit: a2a0e26
+    commit: eaeca8e
     diff:
-      - file: index.js
-        display: true
-      - file: package-lock.json
       - file: package.json
         display: true
+        explain:
+          pre: >-
+            ## 模板引擎
+
+
+            首先，访问
+            [Github](https://github.com/pftom/express-tutorial-02)，将初始代码下载下来，并使用你钟爱的编辑器打开。
+
+
+            然后打开终端，进入到我们的项目目录之下，输入如下命令：
+
+
+            ```shell
+
+            npm install pug
+
+            ```
+
+
+            执行完之后的 `package.json` 如下：
+          post: >-
+            我们通过上面的命令安装了一个名为 [pug](https://pugjs.org/api/getting-started.html)
+            的模板引擎。现在我们先简单来看看一个简单的 pug 模板是怎么样的。
       - file: views/index.pug
         display: true
+        explain:
+          pre: 我们在项目根目录之下创建 `views` 文件夹，并在这个文件夹之下新建一个 `index.pug` 文件，在其中输入如下的内容：
+          post: >-
+            可以看到，一个 pug 模板引擎其实就是一个模板文件，它接收一些填充数据，然后它会生成相应的填充了数据的 HTML 文件。
+
+
+            我们通过 Node 的 [REPL](http://www.runoob.com/nodejs/nodejs-repl.html)
+            来进一步来真实的演示一下模板引擎的输出内容。我们打开终端，进入项目根目录，输入 `node` 进入 REPL 环境。
+
+
+            测验如下：
+
+
+            ![](tuture-assets/2af4a695298fa05c74deacf448734efb)
+
+
+            可以看到，pug 使用缩进来表示 HTML 元素的层级，通过 `#{variable}`
+            来在模板引擎中使用变量，这里我们的想展示的变量为 `info` ，它的值为 `"Node"` 。
+      - file: index.js
+        display: true
+        explain:
+          pre: >-
+            接下来，我们看一下如何将 pug 模板整合到我们的 Express 应用中。打开 `index.js`
+            ，设置我们模板引擎使用的一些必要参数如下：
+          post: |-
+            可以看到，我们新增了四行代码，下面让我们来解释一下他们各自的作用：
+
+             - 在第 1 行中，我们使用 `require` 导出了一个 Node 内置模块 `path`，通过字面意思，我们可以知道它是用来处理一些关于路径的问题。
+
+             - 在第 6 行中，我们通过设置 `views` 属性告诉 Express 我们的模板引擎文件存放的路径。
+
+             - 在第 7 行中，我们通过设置 `view engine` 这一属性来告诉 Express 我们在这个项目中会使用 `pug` 这个模板引擎。因为我们前面安装了 `pug` ，因此可以在这里申明我们将使用它。
+
+             - 在第 9 行中，我们将原来直接发送字符串的 `res.send("Hello Node")` 改为 `res.render("index")`，因为我们在第 6 行代码设置了模板引擎存放的路径为 `views`，因此 `res.render("index")` 会去项目根目录下寻找 `views` 文件夹，然后渲染 `views/index.pug` 发送给访问者。
+      - file: package-lock.json
+    explain:
+      pre: |-
+        本篇教程是 “使用 Express 开发项目系列-02-路由、中间件、模板引擎指北”。
+
+        在这篇教程中，你将完成如下目标：
+
+         - 使用模板引擎代替之前直接返回的字符串
+
+         - 使用路由来处理不同的访问链接
+
+         - 认识 Express 中间件，以及如何进行错误处理
+
+        接下来就让我们一步一步的揭开这些疑问，完成我们的目标吧！
