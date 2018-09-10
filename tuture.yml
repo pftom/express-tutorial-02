@@ -4,4 +4,14 @@ topics:
   - JavaScript
   - Nodejs
 id: c9136e583956eb18c610c7152c2fcfd7
-steps: []
+steps:
+  - name: 使用模板引擎
+    commit: a2a0e26
+    diff:
+      - file: index.js
+        display: true
+      - file: package-lock.json
+      - file: package.json
+        display: true
+      - file: views/index.pug
+        display: true
