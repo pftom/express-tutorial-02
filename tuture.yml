@@ -114,3 +114,71 @@ steps:
          - 认识 Express 中间件，以及如何进行错误处理
 
         接下来就让我们一步一步的揭开这些疑问，完成我们的目标吧！
+  - name: 构建项目基础页面
+    commit: 366cecf
+    diff:
+      - file: views/header.pug
+        display: true
+        explain:
+          pre: |-
+            项目包含三个页面：explore，docs，discussion，他们拥有共同的头部导航，用于跳转到各个页面。
+
+            现在让我们先创建共有的头部导航页，命名为 `header.pug`，添加如下的内容：
+          post: |-
+            可以看到，我们添加了一个无序列表，在其中添加了三个链接分别指向三个不同的页面。
+
+            在第 12 行，我们看到了点陌生的东西：`block content`，你可能会感觉到有点迷糊，但是别着急，我们马上就会讲到它。
+      - file: views/explore.pug
+        display: true
+        explain:
+          pre: 接着，我们来创建展示 explore 页的模板，加入内容如下：
+          post: >-
+            我们发现，这个模板里面又出现了一个新东西：`extends header.pug` ，而且又出现了我们熟悉的 `block
+            content` ，现在我们可以来讲一讲这是什么意思了。
+
+
+            `block content` 相当于一个占位符，也就是 `header.pug` 作为父模板，`explore.pug`
+            去继承它，然后 `explore.pug` 相同 `block content` 下的内容就会替换 `header.pug` 相应的
+            `block content`。
+
+
+            在这里 `explore.pug` 最终的结果会是这样的：
+
+
+            ```pug
+
+            html
+              head
+                title Cool website
+              body
+                ul
+                  li
+                    a(href="/explore") 探索
+                  li
+                    a(href="/docs") 文档
+                  li
+                    a(href="discussion") 讨论区
+                div 探索
+            ```
+      - file: index.js
+        display: true
+        explain:
+          pre: 我们打开 `index.js` 文件，将第 4 行渲染 `index.pug` 改为渲染 `explore.pug` 如下：
+          post: |-
+            接着，我们在终端运行 `node index.js` 来开启我们的项目，打开浏览器查看结果如下：
+
+            ![](tuture-assets/5a42fb387ccc908ed9f7b5aad8ecbf23)
+
+            现在我们已经成功添加了基础页面的第一个页面：explore。现在让我们加把劲，把剩下的页面完成。
+      - file: views/discussion.pug
+        display: true
+        explain:
+          pre: 我们打开项目，在 `views` 目录下创建 `discussion.pug`  和 `docs.pug` 文件，输入内容如下：
+      - file: views/docs.pug
+        display: true
+        explain:
+          post: 可以看到，这两个模板的内容和我们在 `explore.pug` 里面填充的内容格式是一样的，只是最后要展示的内容不太一样。
+      - file: views/index.pug
+        display: false
+    explain:
+      pre: 通过上一步骤的讲解，我们了解了模板引擎是干什么的，以及如何使用。现在我们来进一步发挥模板引擎的潜能，搭建我们项目的基础页面页面。
