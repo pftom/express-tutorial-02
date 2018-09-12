@@ -6,7 +6,7 @@ topics:
 id: c9136e583956eb18c610c7152c2fcfd7
 steps:
   - name: 使用模板引擎
-    commit: eaeca8e
+    commit: a2a0e26
     diff:
       - file: package.json
         display: true
@@ -36,7 +36,7 @@ steps:
       - file: views/index.pug
         display: true
         explain:
-          pre: 我们在项目根目录之下创建 `views` 文件夹，并在这个文件夹之下新建一个 `index.pug` 文件，在其中输入如下的内容：
+          pre: 在项目根目录之下创建 `views` 文件夹，并在这个文件夹之下新建一个 `index.pug` 文件，在其中输入如下的内容：
           post: >-
             可以看到，一个 pug 模板引擎其实就是一个模板文件，它接收一些填充数据，然后它会生成相应的填充了数据的 HTML 文件。
 
@@ -59,16 +59,47 @@ steps:
           pre: >-
             接下来，我们看一下如何将 pug 模板整合到我们的 Express 应用中。打开 `index.js`
             ，设置我们模板引擎使用的一些必要参数如下：
-          post: |-
+          post: >-
+            我们打开终端，在项目根目录下运行 `node index.js` 命令，打开浏览器访问 `http://localhost:3000`
+            查看结果如下：
+
+
+            ![](tuture-assets/d558164c41b07bcac5da057e9b518992)
+
+
             可以看到，我们新增了四行代码，下面让我们来解释一下他们各自的作用：
 
-             - 在第 1 行中，我们使用 `require` 导出了一个 Node 内置模块 `path`，通过字面意思，我们可以知道它是用来处理一些关于路径的问题。
 
-             - 在第 6 行中，我们通过设置 `views` 属性告诉 Express 我们的模板引擎文件存放的路径。
+            在第 1 行中，我们使用 `require` 导出了一个 Node 内置模块 `path`，它内置了一些关于路径操作的函数，
+            `path.join` 是用来将一系列路径连起来组成一个路径的操作。
 
-             - 在第 7 行中，我们通过设置 `view engine` 这一属性来告诉 Express 我们在这个项目中会使用 `pug` 这个模板引擎。因为我们前面安装了 `pug` ，因此可以在这里申明我们将使用它。
 
-             - 在第 9 行中，我们将原来直接发送字符串的 `res.send("Hello Node")` 改为 `res.render("index")`，因为我们在第 6 行代码设置了模板引擎存放的路径为 `views`，因此 `res.render("index")` 会去项目根目录下寻找 `views` 文件夹，然后渲染 `views/index.pug` 发送给访问者。
+            在第 6 行中，我们通过设置 `views` 属性告诉 Express 我们的模板引擎文件存放的路径。
+
+
+            `__dirname` 表示执行文件的所在目录路径。比如我们需要执行如下文件：`node index.js`，那么
+            `__dirname` 就是 `index.js` 所在目录的路径。所以 `path.join(__dirname,
+            'views'))` 表示执行文件所在目录下的 `views` 文件夹的路径。
+
+
+            我们通过 `app.set('views', path.join(__dirname, 'views'))` 告诉
+            Express，我们的模板引擎存放的路径时当前执行文件所在目录下的 `views` 路径。
+
+
+            在第 7 行中，我们通过设置 `view engine` 这一属性来告诉 Express 我们在这个项目中会使用 `pug`
+            这个模板引擎。因为我们前面安装了 `pug` ，因此可以在这里申明我们将使用它。
+
+
+            在第 9 行中，我们将原来直接发送字符串的 `res.send("Hello Node")` 改为
+            `res.render("index")`，因为我们在第 6 行代码设置了模板引擎存放的路径为 `views`，因此
+            `res.render("index")` 会去项目根目录下寻找 `views` 文件夹，然后渲染 `views/index.pug`
+            发送给访问者。
+
+
+            最后浏览器会收到下面的内容并渲染：
+
+
+            ![](tuture-assets/9d29ad833b7749f024a07fe9b2dc7156)
       - file: package-lock.json
     explain:
       pre: |-
