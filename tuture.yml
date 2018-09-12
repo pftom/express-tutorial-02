@@ -114,6 +114,9 @@ steps:
          - 认识 Express 中间件，以及如何进行错误处理
 
         接下来就让我们一步一步的揭开这些疑问，完成我们的目标吧！
+      post: >-
+        > 将[本项目](https://github.com/pftom/express-tutorial-02) Clone 到本地，`git
+        checkout -b step-01` 切换到 `step-01` 分支可以查看目前的完整代码。
   - name: 构建项目基础页面
     commit: 366cecf
     diff:
@@ -182,3 +185,6 @@ steps:
         display: false
     explain:
       pre: 通过上一步骤的讲解，我们了解了模板引擎是干什么的，以及如何使用。现在我们来进一步发挥模板引擎的潜能，搭建我们项目的基础页面页面。
+      post: >-
+        > 将[本项目](https://github.com/pftom/express-tutorial-02) Clone 到本地，`git
+        checkout -b step-02` 切换到 `step-02` 分支可以查看目前的完整代码。
